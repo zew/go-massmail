@@ -52,9 +52,18 @@ done
 
 
 echo "konjunktur"
-src4="${src}konjunktur.xls"
-\cp -p  $src4   ./
-\cp -p  $src4   ./ftp/
+# copying xls and xlsx - on missing source
+cnt4=0
+for src4 in "${src}konjunktur.xls" "${src}konjunktur.xlsx"; do
+    if [ -f "$src4" ]; then
+        \cp -p  "$src4"   ./
+        \cp -p  "$src4"   ./ftp/
+        cnt4=$(( cnt4 + 1 ))
+    fi
+done
+if [ "$cnt4" -eq 0 ]; then
+    echo "    konjunktur.xls / .xlsx  are missing"
+fi
 
 
 echo "tabellen-directory"
